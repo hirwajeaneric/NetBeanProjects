@@ -58,9 +58,10 @@ public class ClientForm extends javax.swing.JInternalFrame {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ClientForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }   
     }
+    
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -88,6 +89,8 @@ public class ClientForm extends javax.swing.JInternalFrame {
         UpdateClientButton = new javax.swing.JButton();
         PrintClientButton = new javax.swing.JButton();
         ClientExitButton = new javax.swing.JButton();
+        resetButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Client");
@@ -158,6 +161,22 @@ public class ClientForm extends javax.swing.JInternalFrame {
             }
         });
 
+        resetButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        resetButton.setText("Reset");
+        resetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetButtonActionPerformed(evt);
+            }
+        });
+
+        deleteButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -168,46 +187,49 @@ public class ClientForm extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(27, 27, 27)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel2)
-                                                .addComponent(jLabel3)
-                                                .addComponent(jLabel5))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(FirstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(LastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(registrationNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel4)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(PhoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGap(113, 113, 113)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jLabel7)
-                                        .addComponent(jLabel8)))
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel5))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(FirstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(LastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(registrationNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(saveButton)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(UpdateClientButton)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(PrintClientButton)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(ClientExitButton)
-                                    .addGap(32, 32, 32)))
+                                    .addComponent(jLabel4)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(PhoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(113, 113, 113)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel7)
+                                .addComponent(jLabel8))
                             .addGap(31, 31, 31)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(CategoryComboBox, 0, 146, Short.MAX_VALUE)
                                 .addComponent(EmailAddressField)
                                 .addComponent(PhotoField, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)))
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(293, 293, 293)
-                            .addComponent(jLabel1))))
+                            .addGap(116, 116, 116)
+                            .addComponent(saveButton)
+                            .addGap(18, 18, 18)
+                            .addComponent(UpdateClientButton)
+                            .addGap(18, 18, 18)
+                            .addComponent(resetButton)
+                            .addGap(24, 24, 24)
+                            .addComponent(deleteButton)
+                            .addGap(18, 18, 18)
+                            .addComponent(PrintClientButton)
+                            .addGap(18, 18, 18)
+                            .addComponent(ClientExitButton))))
                 .addContainerGap(21, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(332, 332, 332))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,13 +267,23 @@ public class ClientForm extends javax.swing.JInternalFrame {
                             .addComponent(CategoryComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))))
                 .addGap(11, 11, 11)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(saveButton)
-                    .addComponent(UpdateClientButton)
-                    .addComponent(PrintClientButton)
-                    .addComponent(ClientExitButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(resetButton)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(saveButton)
+                                    .addComponent(UpdateClientButton))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(PrintClientButton)
+                            .addComponent(ClientExitButton)
+                            .addComponent(deleteButton))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -300,7 +332,34 @@ public class ClientForm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void UpdateClientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateClientButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+            DefaultTableModel record = (DefaultTableModel)clientTable.getModel();
+            int SelectedRows = clientTable.getSelectedRow();
+            
+            int id = Integer.parseInt(record.getValueAt(SelectedRows, 0).toString());
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
+            s = con.createStatement();
+            ps = con.prepareStatement("UPDATE client SET regNo=?, firstName=?, lastName=?, phoneNumber=?, emailAddress=?, photo=?, clientCategory=? WHERE regNo=?");
+            
+            ps.setString(1, registrationNumberField.getText());
+            ps.setString(2, FirstNameField.getText());
+            ps.setString(3, LastNameField.getText());
+            ps.setString(4, PhoneNumberField.getText());
+            ps.setString(5, EmailAddressField.getText());
+            ps.setString(6, PhotoField.getText());
+            ps.setString(7, (String)CategoryComboBox.getSelectedItem());
+            ps.setInt(8, id);
+            
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Client Record successfully updated!!");
+            updateTableClient();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
     }//GEN-LAST:event_UpdateClientButtonActionPerformed
 
     private void PrintClientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrintClientButtonActionPerformed
@@ -340,6 +399,52 @@ public class ClientForm extends javax.swing.JInternalFrame {
             }
     }//GEN-LAST:event_clientTableMouseClicked
 
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+        registrationNumberField.setText("");
+        FirstNameField.setText("");
+        LastNameField.setText("");
+        PhoneNumberField.setText("");
+        EmailAddressField.setText("");
+        PhotoField.setText("");
+        CategoryComboBox.setSelectedItem(0);
+                
+    }//GEN-LAST:event_resetButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        
+        DefaultTableModel model = (DefaultTableModel)clientTable.getModel();
+        int SelectedRows = clientTable.getSelectedRow();
+        
+        int id = Integer.parseInt(model.getValueAt(SelectedRows, 0).toString());
+        int deleteItem = JOptionPane.showConfirmDialog(null, "Confirm if you want to delete item","Warning",JOptionPane.YES_NO_OPTION);
+        if (deleteItem == JOptionPane.YES_OPTION){
+            
+            try {
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
+                s = con.createStatement();
+                ps = con.prepareStatement("DELETE FROM client where regNo=?");
+                
+                ps.setInt(1, id);
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Client Record updated Successfully!");
+                updateTableClient();
+                
+                registrationNumberField.setText("");
+                FirstNameField.setText("");
+                LastNameField.setText("");
+                PhoneNumberField.setText("");
+                EmailAddressField.setText("");
+                PhotoField.setText("");
+                CategoryComboBox.setSelectedItem(0);
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(ClientForm.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        
+        }
+        
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
     private JFrame frame;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CategoryComboBox;
@@ -352,6 +457,7 @@ public class ClientForm extends javax.swing.JInternalFrame {
     private javax.swing.JButton PrintClientButton;
     private javax.swing.JButton UpdateClientButton;
     private javax.swing.JTable clientTable;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -363,6 +469,7 @@ public class ClientForm extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField registrationNumberField;
+    private javax.swing.JButton resetButton;
     private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 }
