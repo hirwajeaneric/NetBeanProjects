@@ -114,15 +114,7 @@ public class ClientForm extends javax.swing.JInternalFrame {
             new String [] {
                 "Registration Number", "First Name", "Last Name", "Phone Number", "Email Address", "Phone Number", "Category"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        ));
         clientTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 clientTableMouseClicked(evt);
@@ -312,13 +304,13 @@ public class ClientForm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_UpdateClientButtonActionPerformed
 
     private void PrintClientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrintClientButtonActionPerformed
-         MessageFormat header = new MessageFormat("Report Print");
+        /* MessageFormat header = new MessageFormat("Report Print");
          MessageFormat footer = new MessageFormat("Page{0,number,integer}");
             try{
             
             }catch(java.awt.print.PrinterException e){
                 System.err.format("Cannot print", os)
-            }
+            }*/
     }//GEN-LAST:event_PrintClientButtonActionPerformed
 
     private void ClientExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClientExitButtonActionPerformed
@@ -329,26 +321,22 @@ public class ClientForm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_ClientExitButtonActionPerformed
 
     private void clientTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clientTableMouseClicked
-        int i = clientTable.getSelectedRow();
-        TableModel model = clientTable.getModel();
+
+        DefaultTableModel model = (DefaultTableModel)clientTable.getModel();
+        int SelectedRows = clientTable.getSelectedRow();
         
-        registrationNumberField.setText(model.getValueAt(i, 0).toString());
-        FirstNameField.setText(model.getValueAt(i, 1).toString());
-        LastNameField.setText(model.getValueAt(i, 2).toString());
-        PhoneNumberField.setText(model.getValueAt(i, 3).toString());
-        EmailAddressField.setText(model.getValueAt(i, 4).toString());
-        PhotoField.setText(model.getValueAt(i, 5).toString());
-        String clientCategory = model.getValueAt(i, 6).toString();
-            switch (clientCategory){
-                case "Student":
-                    CategoryComboBox.setSelectedItem(0);
-                    break;
-                case "Staff":
-                    CategoryComboBox.setSelectedItem(1);
-                    break;
-                case "External":
-                    CategoryComboBox.setSelectedItem(2);
-                    break;
+        registrationNumberField.setText(model.getValueAt(SelectedRows, 0).toString());
+        FirstNameField.setText(model.getValueAt(SelectedRows, 1).toString());
+        LastNameField.setText(model.getValueAt(SelectedRows, 2).toString());
+        PhoneNumberField.setText(model.getValueAt(SelectedRows, 3).toString());
+        EmailAddressField.setText(model.getValueAt(SelectedRows, 4).toString());
+        PhotoField.setText(model.getValueAt(SelectedRows, 5).toString());
+        
+        String clientCategory = model.getValueAt(SelectedRows, 6).toString();
+            for (int i=0; i<CategoryComboBox.getItemCount(); i++){
+                if(CategoryComboBox.getItemAt(i).equalsIgnoreCase(clientCategory)){
+                   CategoryComboBox.setSelectedIndex(i);
+                }
             }
     }//GEN-LAST:event_clientTableMouseClicked
 

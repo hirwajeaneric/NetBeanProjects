@@ -5,8 +5,8 @@ import controller.CheckOutDao;
 import java.awt.print.PrinterException;
 import java.sql.*;
 import java.text.MessageFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,10 +14,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import model.CheckIn;
 import model.CheckOut;
- 
+
 
 public class Operations extends javax.swing.JInternalFrame {
 
@@ -25,7 +24,7 @@ public class Operations extends javax.swing.JInternalFrame {
     public PreparedStatement ps = null;
     public ResultSet rs = null;
     public Statement s = null;
-    
+
     public Operations() {
         initComponents();
         updateTableCheckIn();
@@ -34,94 +33,94 @@ public class Operations extends javax.swing.JInternalFrame {
         updateBooksComboBox();
         updateNameCombo();
         updateBookCombo();
-        
+
     }
-    
+
     /**
      * MY PERSONAL METHODS
      */
-    
+
 //COMBO BOXES
-    
+
     private void updateNameCombo(){
         try{
             String sql ="SELECT firstName, lastName FROM client";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            
+
             while(rs.next()){
                 String fname = rs.getString("firstName");
                 String lname = rs.getString("lastName");
                 clientNamesInComboBox.addItem(fname +" "+ lname);
                 clientNamesOutComboBox.addItem(fname +" "+ lname);
             }
-        
+
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
     }
-     
-    
+
+
     public void updateBookCombo(){
         try{
             ps = con.prepareStatement("SELECT * FROM book");
             rs = ps.executeQuery();
-            
+
             while(rs.next()){
                 String nameofbook = rs.getString("title");
                 titleOfbookInComboBox.addItem(nameofbook);
                 titleOfBookOutComboBox.addItem(nameofbook);
             }
-            
+
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex);
         }
     }
-    
+
     public void updateNamesComboBox(){
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
             s = con.createStatement();
             rs = s.executeQuery("select firstName, lastName from client");
-            
-            
+
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
-    
+
     }
-    
+
     public void updateBooksComboBox(){
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
             s = con.createStatement();
             rs = s.executeQuery("select title from book");
-        
+
         } catch (SQLException ex) {
             Logger.getLogger(Operations.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
+
     }
-    
+
 //UPDATING TABLES
-    
+
     public void updateTableCheckIn(){
         try {
             int i,q;
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
             s = con.createStatement();
             rs = s.executeQuery("select * from checkin");
-            
+
             ResultSetMetaData stData = (ResultSetMetaData) rs.getMetaData();
-            
+
             q = stData.getColumnCount();
             DefaultTableModel record = (DefaultTableModel) checkInTable.getModel();
             record.setRowCount(0);
-            
+
             while(rs.next()){
-            
+
                 Vector columnData = new Vector();
-                
+
                 for (i = 1;  i<= q; i++) {
                     columnData.add(rs.getString("clientName"));
                     columnData.add(rs.getString("title"));
@@ -130,29 +129,29 @@ public class Operations extends javax.swing.JInternalFrame {
                 }
                 record.addRow(columnData);
             }
-            
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
     }
-    
+
     public void updateTableCheckOut(){
         try {
             int i,q;
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
             s = con.createStatement();
             rs = s.executeQuery("select * from checkOut");
-            
+
             ResultSetMetaData stData = (ResultSetMetaData) rs.getMetaData();
-            
+
             q = stData.getColumnCount();
             DefaultTableModel record = (DefaultTableModel) checkOutTable.getModel();
             record.setRowCount(0);
-            
+
             while(rs.next()){
-            
+
                 Vector columnData = new Vector();
-                
+
                 for (i = 1;  i<= q; i++) {
                     columnData.add(rs.getString("clientName"));
                     columnData.add(rs.getString("title"));
@@ -160,14 +159,14 @@ public class Operations extends javax.swing.JInternalFrame {
                     columnData.add(rs.getString("status"));
                 }
                 record.addRow(columnData);
-            }    
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Operations.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-    
+
+
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -232,13 +231,12 @@ public class Operations extends javax.swing.JInternalFrame {
             new String [] {
                 "Client", "Book", "DateIn", "Status"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+        ));
+        checkInTable.setShowHorizontalLines(false);
+        checkInTable.setShowVerticalLines(false);
+        checkInTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                checkInTableMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(checkInTable);
@@ -247,7 +245,7 @@ public class Operations extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Status");
 
-        statusInComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Check In", "Check out" }));
+        statusInComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Check In", "Check out" }));
 
         saveButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         saveButton.setText("Save");
@@ -375,7 +373,7 @@ public class Operations extends javax.swing.JInternalFrame {
 
         jLabel15.setText("Status");
 
-        statusOutComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Check In", "Check out" }));
+        statusOutComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Check In", "Check Out" }));
 
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton3.setText("Save");
@@ -403,15 +401,9 @@ public class Operations extends javax.swing.JInternalFrame {
             new String [] {
                 "Client", "Book", "DateOut", "Status"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        ));
+        checkOutTable.setShowHorizontalLines(false);
+        checkOutTable.setShowVerticalLines(false);
         checkOutTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 checkOutTableMouseClicked(evt);
@@ -439,7 +431,7 @@ public class Operations extends javax.swing.JInternalFrame {
                         .addGap(23, 23, 23)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 632, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(287, 287, 287)
+                        .addGap(293, 293, 293)
                         .addComponent(jLabel6))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(168, 168, 168)
@@ -547,21 +539,21 @@ public class Operations extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     //BUTTONS
-    
+
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         String name = (String)clientNamesInComboBox.getSelectedItem();
         String book = (String)titleOfbookInComboBox.getSelectedItem();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String dateIn = sdf.format(dateInField.getDate());
         String status = (String)statusInComboBox.getSelectedItem();
-        
+
         CheckIn in = new CheckIn(name, book, dateIn, status);
         CheckInDao inda = new CheckInDao();
         inda.SavingCheckIn(in);
-        
+
         updateTableCheckIn();
         JOptionPane.showMessageDialog(this, "Successfully updated table check in!!");
-        
+
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void clientNamesInComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientNamesInComboBoxActionPerformed
@@ -574,14 +566,14 @@ public class Operations extends javax.swing.JInternalFrame {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String dateOut = sdf.format(dateOutField.getDate());
         String status = (String)statusOutComboBox.getSelectedItem();
-        
+
         CheckOut ou = new CheckOut(name, book, dateOut, status);
         CheckOutDao ouda = new CheckOutDao();
         ouda.SavinCheckOut(ou);
-        
+
         updateTableCheckOut();
         JOptionPane.showMessageDialog(this, "Successfully updated table check out!");
-        
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void exitButtonCheckOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonCheckOutActionPerformed
@@ -601,7 +593,7 @@ public class Operations extends javax.swing.JInternalFrame {
     private void printButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printButtonActionPerformed
         MessageFormat header = new MessageFormat("Printing in Progress...");
         MessageFormat footer = new MessageFormat("Page {0, number, integer}");
-        
+
         try {
             checkInTable.print(JTable.PrintMode.NORMAL, header, footer);
         } catch (PrinterException ex) {
@@ -612,7 +604,7 @@ public class Operations extends javax.swing.JInternalFrame {
     private void printButtonCheckOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printButtonCheckOutActionPerformed
         MessageFormat header = new MessageFormat("Printing in Progress...");
         MessageFormat footer = new MessageFormat("Page {0, number, integer}");
-        
+
         try {
             checkOutTable.print(JTable.PrintMode.NORMAL, header, footer);
         } catch (PrinterException ex) {
@@ -621,19 +613,58 @@ public class Operations extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_printButtonCheckOutActionPerformed
 
     private void checkOutTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_checkOutTableMouseClicked
-        int i = checkOutTable.getSelectedRow();
-        TableModel model = checkOutTable.getModel();
-        
-        clientNamesOutComboBox.setSelectedItem(model.getValueAt(i, 1));
-        titleOfBookOutComboBox.setSelectedItem(model.getValueAt(i, 2));
-        //Calendar clndr = null;
-        //dateOutField.setCalendar(model.getValueAt(i, 3).toString());
-        //statusOutComboBox.setSelectedItem(model.getValueAt(i, 4).toString());
-        
+        try {
+            DefaultTableModel model = (DefaultTableModel)checkOutTable.getModel();
+            int SelectedRows = checkOutTable.getSelectedRow();
+
+            String clientNameOut = model.getValueAt(SelectedRows, 0).toString();
+            for (int i=0; i<clientNamesOutComboBox.getItemCount(); i++){
+                if (clientNamesOutComboBox.getItemAt(i).toString().equalsIgnoreCase(clientNameOut)){
+                    clientNamesOutComboBox.setSelectedIndex(i);
+                }
+            }
+            String bookOut = model.getValueAt(SelectedRows, 1).toString();
+            for (int i=0; i<titleOfBookOutComboBox.getItemCount(); i++){
+                if (titleOfBookOutComboBox.getItemAt(i).toString().equalsIgnoreCase(bookOut)){
+                    titleOfBookOutComboBox.setSelectedIndex(i);
+                }
+            }
+            java.util.Date date = new SimpleDateFormat("yyyy-MM-dd").parse((String)model.getValueAt(SelectedRows, 2));
+            dateOutField.setDate(date);
+
+        } catch (ParseException ex) {
+            Logger.getLogger(Operations.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_checkOutTableMouseClicked
 
-    
-    private JFrame frame;    
+    private void checkInTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_checkInTableMouseClicked
+        try {
+            DefaultTableModel model = (DefaultTableModel)checkInTable.getModel();
+            int SelectedRows = checkInTable.getSelectedRow();
+
+            String clientNameIn = model.getValueAt(SelectedRows, 0).toString();
+            for (int i=0; i<clientNamesInComboBox.getItemCount(); i++){
+                if (clientNamesInComboBox.getItemAt(i).toString().equalsIgnoreCase(clientNameIn)){
+                    clientNamesInComboBox.setSelectedIndex(i);
+                }
+            }
+            String bookIn = model.getValueAt(SelectedRows, 1).toString();
+            for (int i=0; i<titleOfbookInComboBox.getItemCount(); i++){
+                if (titleOfbookInComboBox.getItemAt(i).toString().equalsIgnoreCase(bookIn)){
+                    titleOfbookInComboBox.setSelectedIndex(i);
+                }
+            }
+            java.util.Date date = new SimpleDateFormat("yyyy-MM-dd").parse((String)model.getValueAt(SelectedRows, 2));
+            dateInField.setDate(date);
+
+        } catch (ParseException ex) {
+            Logger.getLogger(Operations.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_checkInTableMouseClicked
+
+
+    private JFrame frame;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable checkInTable;
     private javax.swing.JTabbedPane checkOut;

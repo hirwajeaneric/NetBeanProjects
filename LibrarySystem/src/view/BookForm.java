@@ -22,6 +22,10 @@ import javax.swing.table.TableModel;
 import model.BookCategory;
 import java.text.*;
 import java.awt.print.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BookForm extends javax.swing.JInternalFrame {
 
@@ -34,8 +38,27 @@ public class BookForm extends javax.swing.JInternalFrame {
         initComponents();
         updateTableBook();
         updateBookCategoryTable();
-         
+        //userList();
     }
+    
+    /*
+    public ArrayList<Book> userList(){
+        ArrayList<Book> userList = new ArrayList<>();
+        try{
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
+            s = con.createStatement();
+            rs = s.executeQuery("SELECT * FROM book");
+            Book book;
+            while(rs.next()){
+                book = new Book(rs.getString(bookId),rs.getString(title),rs.getString(publishingHouse), rs.getString(dateOfPublication), rs.getString(author), rs.getString(pages),rs.getString(bookCategory));
+                userList.add(book);
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        return userList;
+    }
+   */
     
     //DISPLAYING ELEMENTS IN THE BOOK TABLE
     public void updateTableBook(){
@@ -182,15 +205,9 @@ public class BookForm extends javax.swing.JInternalFrame {
             new String [] {
                 "Category Id", "Category Name"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        ));
+        bookCategoryTable.setShowHorizontalLines(false);
+        bookCategoryTable.setShowVerticalLines(false);
         bookCategoryTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 bookCategoryTableMouseClicked(evt);
@@ -336,15 +353,8 @@ public class BookForm extends javax.swing.JInternalFrame {
             new String [] {
                 "Book Id", "Book Title", "Publishing House", "Publication date", "Author", "Number of pages", "category"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        ));
+        bookTable.setColumnSelectionAllowed(true);
         bookTable.setShowHorizontalLines(false);
         bookTable.setShowVerticalLines(false);
         bookTable.setUpdateSelectionOnSort(false);
@@ -581,16 +591,21 @@ public class BookForm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_exitButtonBookCategoryActionPerformed
 
     private void bookTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookTableMouseClicked
-        DefaultTableModel record = (DefaultTableModel)bookTable.getModel();
-        int SelectedRows = bookTable.getSelectedRow();
-        
-        bookIdField.setText(record.getValueAt(SelectedRows, 0).toString());
-        bookTitleField.setText(record.getValueAt(SelectedRows, 1).toString());
-        publishingHouseField.setText(record.getValueAt(SelectedRows, 2).toString());
-        publicationDateField.setDateFormatString(record.getValueAt(SelectedRows, 3).toString());
-        authorField.setText(record.getValueAt(SelectedRows, 4).toString());
-        PagesField.setText(record.getValueAt(SelectedRows, 5).toString());
-        categoryNameField.setText(record.getValueAt(SelectedRows, 6).toString());
+        try {
+            DefaultTableModel record = (DefaultTableModel)bookTable.getModel();
+            int SelectedRows = bookTable.getSelectedRow();
+            
+            bookIdField.setText(record.getValueAt(SelectedRows, 0).toString());
+            bookTitleField.setText(record.getValueAt(SelectedRows, 1).toString());
+            publishingHouseField.setText(record.getValueAt(SelectedRows, 2).toString());
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse((String)record.getValueAt(SelectedRows, 3));
+            publicationDateField.setDate(date);
+            authorField.setText(record.getValueAt(SelectedRows, 4).toString());
+            PagesField.setText(record.getValueAt(SelectedRows, 5).toString());
+            categoryNameField.setText(record.getValueAt(SelectedRows, 6).toString());
+        } catch (ParseException ex) {
+            Logger.getLogger(BookForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_bookTableMouseClicked
 
