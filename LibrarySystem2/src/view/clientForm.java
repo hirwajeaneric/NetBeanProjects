@@ -7,6 +7,8 @@ package view;
 
 import com.mysql.jdbc.PreparedStatement;
 import controller.ClientDao;
+import java.awt.Image;
+import java.io.File;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -17,6 +19,8 @@ import model.Client;
 import java.sql.*;
 import java.text.MessageFormat;
 import java.util.Vector;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import util.ConnectionToDb;
@@ -103,6 +107,8 @@ public class clientForm extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         clientTable = new javax.swing.JTable();
         Message = new javax.swing.JLabel();
+        addImageButton = new javax.swing.JButton();
+        imageLabel = new javax.swing.JLabel();
 
         setTitle("Client");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -144,7 +150,7 @@ public class clientForm extends javax.swing.JInternalFrame {
         getContentPane().add(lastNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 160, -1));
         getContentPane().add(phoneNumberField, new org.netbeans.lib.awtextra.AbsoluteConstraints(534, 64, 145, -1));
         getContentPane().add(emailAddressField, new org.netbeans.lib.awtextra.AbsoluteConstraints(535, 106, 144, -1));
-        getContentPane().add(photoField, new org.netbeans.lib.awtextra.AbsoluteConstraints(535, 148, 144, -1));
+        getContentPane().add(photoField, new org.netbeans.lib.awtextra.AbsoluteConstraints(535, 148, 70, -1));
 
         clientCategoryField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Student", "Staff" }));
         getContentPane().add(clientCategoryField, new org.netbeans.lib.awtextra.AbsoluteConstraints(537, 190, 142, -1));
@@ -223,14 +229,23 @@ public class clientForm extends javax.swing.JInternalFrame {
         Message.setText(" ");
         getContentPane().add(Message, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 20, -1));
 
+        addImageButton.setText("Add");
+        addImageButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addImageButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(addImageButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 140, 70, -1));
+        getContentPane().add(imageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 300, 110, 140));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonClientActionPerformed
-        
+        /*
         if (regNoField.getText().trim().isEmpty()){
             Message.setText("Registration field can't be empty!!");
-        
+        */
         String regNo = regNoField.getText();
         String firstName = firstNameField.getText();
         String lastName = lastNameField.getText();
@@ -238,11 +253,11 @@ public class clientForm extends javax.swing.JInternalFrame {
         String emailAddress = emailAddressField.getText();
         String photo = photoField.getText();
         String clientCategory = (String)clientCategoryField.getSelectedItem();
-        if(regNo.equals("")){
+        /*if(regNo.equals("")){
             JOptionPane.showMessageDialog(this, "Registration Number is mandatory!!");
             ConnectionToDb cn = new ConnectionToDb();
             cn.getDisconnection();
-        }else{
+        }else{*/
         Client cl = new Client(regNo, firstName, lastName, phoneNumber, emailAddress, photo, clientCategory);
         
         ClientDao cld = new ClientDao();
@@ -253,7 +268,7 @@ public class clientForm extends javax.swing.JInternalFrame {
         
         updateTableClient();
         JOptionPane.showMessageDialog(this, "Successfully saved Client info!!");
-        }
+        //}
     }//GEN-LAST:event_saveButtonClientActionPerformed
     //private JFrame frame;
     private void exitButtonClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonClientActionPerformed
@@ -371,15 +386,30 @@ public class clientForm extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_regNoFieldKeyReleased
 
+    private void addImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImageButtonActionPerformed
+        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        File f = chooser.getSelectedFile();
+        String filename = f.getAbsolutePath();
+        photoField.setText(filename);
+        Image getAbsolutePath = null;
+        ImageIcon icon = new ImageIcon(filename);
+        Image image = icon.getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
+        imageLabel.setIcon(icon);
+    }//GEN-LAST:event_addImageButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Message;
+    private javax.swing.JButton addImageButton;
     private javax.swing.JComboBox<String> clientCategoryField;
     private javax.swing.JTable clientTable;
     private javax.swing.JButton deleteButtonClient;
     private javax.swing.JTextField emailAddressField;
     private javax.swing.JButton exitButtonClient;
     private javax.swing.JTextField firstNameField;
+    private javax.swing.JLabel imageLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

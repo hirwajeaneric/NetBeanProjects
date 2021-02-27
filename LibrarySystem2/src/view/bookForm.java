@@ -503,12 +503,12 @@ public class bookForm extends javax.swing.JInternalFrame {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String dateOfPublication = sdf.format(dateOfPublicationField.getDate());
         String author = authorField.getText();
-        String page = pageField.getText();
-        int pages = Integer.parseInt(page);
+        String pages = pageField.getText();
+        int page = Integer.parseInt(pages);
         String bookCategory = bookCategoryField.getText();
 
-        Book bk = new Book(bookId, title, publishingHouse, dateOfPublication, author, page, bookCategory);
-       
+        Book bk = new Book(bookId, title, publishingHouse, dateOfPublication, author, pages, bookCategory);
+
         BookDao bd = new BookDao();
         bd.SaveBookData(bk);
 
@@ -600,10 +600,10 @@ public class bookForm extends javax.swing.JInternalFrame {
                 categoryIdField.setText("");
                 categoryNameField.setText("");
 
-
             } catch (SQLException ex) {
                 Logger.getLogger(bookForm.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
     }//GEN-LAST:event_deleteButtonBookCategoryActionPerformed
 
     private void updateButtonCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonCatActionPerformed

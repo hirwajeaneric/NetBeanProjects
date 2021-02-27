@@ -20,7 +20,7 @@ public class BookDao extends ConnectionToDb {
             ps.setString(5, b.getAuthor());
             ps.setString(6, b.getPages());
             ps.setString(7, b.getBookCategory());
-            
+            ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(BookDao.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
